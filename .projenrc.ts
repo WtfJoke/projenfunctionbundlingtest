@@ -9,7 +9,6 @@ const project = new awscdk.AwsCdkConstructLibrary({
   projenrcTs: true,
   repositoryUrl:
     'https://github.com/manuel.wessner/projenfunctionbundlingtest.git',
-  publishDryRun: true,
   npmRegistryUrl: 'https://npm.pkg.github.com',
 
   // deps: [],                /* Runtime dependencies of this module. */
