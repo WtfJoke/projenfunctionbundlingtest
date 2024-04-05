@@ -39,17 +39,23 @@ new SomeFunction(scope: Construct, id: string)
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.applyRemovalPolicy">applyRemovalPolicy</a></code> | Apply the given removal policy to this resource. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.addEventSource">addEventSource</a></code> | Adds an event source to this function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.addEventSourceMapping">addEventSourceMapping</a></code> | Adds an event source that maps to this AWS Lambda function. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.addFunctionUrl">addFunctionUrl</a></code> | Adds a url to this lambda function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.addPermission">addPermission</a></code> | Adds a permission to the Lambda resource policy. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.addToRolePolicy">addToRolePolicy</a></code> | Adds a statement to the IAM role assumed by the instance. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.configureAsyncInvoke">configureAsyncInvoke</a></code> | Configures options for asynchronous invocation. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.considerWarningOnInvokeFunctionPermissions">considerWarningOnInvokeFunctionPermissions</a></code> | A warning will be added to functions under the following conditions: - permissions that include `lambda:InvokeFunction` are added to the unqualified function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.grantInvoke">grantInvoke</a></code> | Grant the given identity permissions to invoke this Lambda. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.grantInvokeCompositePrincipal">grantInvokeCompositePrincipal</a></code> | Grant multiple principals the ability to invoke this Lambda via CompositePrincipal. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.grantInvokeUrl">grantInvokeUrl</a></code> | Grant the given identity permissions to invoke this Lambda Function URL. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metric">metric</a></code> | Return the given named metric for this Function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricDuration">metricDuration</a></code> | How long execution of this Lambda takes. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricErrors">metricErrors</a></code> | How many invocations of this Lambda fail. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricInvocations">metricInvocations</a></code> | How often this Lambda is invoked. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricThrottles">metricThrottles</a></code> | How often this Lambda is throttled. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.addAlias">addAlias</a></code> | Defines an alias for this function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.addEnvironment">addEnvironment</a></code> | Adds an environment variable to this Lambda function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.addLayers">addLayers</a></code> | Adds one or more Lambda Layers to this Lambda function. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.invalidateVersionBasedOn">invalidateVersionBasedOn</a></code> | Mix additional information into the hash of the Version object. |
 
 ---
 
@@ -91,11 +97,11 @@ public addEventSource(source: IEventSource): void
 
 Adds an event source to this function.
 
-Event sources are implemented in the @aws-cdk/aws-lambda-event-sources module.
+Event sources are implemented in the aws-cdk-lib/aws-lambda-event-sources module.
 
 The following example adds an SQS Queue as an event source:
 ```
-import { SqsEventSource } from '@aws-cdk/aws-lambda-event-sources';
+import { SqsEventSource } from 'aws-cdk-lib/aws-lambda-event-sources';
 myFunction.addEventSource(new SqsEventSource(myQueue));
 ```
 
@@ -122,6 +128,20 @@ Adds an event source that maps to this AWS Lambda function.
 ###### `options`<sup>Required</sup> <a name="options" id="projenfunctionbundlingtest.SomeFunction.addEventSourceMapping.parameter.options"></a>
 
 - *Type:* aws-cdk-lib.aws_lambda.EventSourceMappingOptions
+
+---
+
+##### `addFunctionUrl` <a name="addFunctionUrl" id="projenfunctionbundlingtest.SomeFunction.addFunctionUrl"></a>
+
+```typescript
+public addFunctionUrl(options?: FunctionUrlOptions): FunctionUrl
+```
+
+Adds a url to this lambda function.
+
+###### `options`<sup>Optional</sup> <a name="options" id="projenfunctionbundlingtest.SomeFunction.addFunctionUrl.parameter.options"></a>
+
+- *Type:* aws-cdk-lib.aws_lambda.FunctionUrlOptions
 
 ---
 
@@ -179,6 +199,31 @@ Configures options for asynchronous invocation.
 
 ---
 
+##### `considerWarningOnInvokeFunctionPermissions` <a name="considerWarningOnInvokeFunctionPermissions" id="projenfunctionbundlingtest.SomeFunction.considerWarningOnInvokeFunctionPermissions"></a>
+
+```typescript
+public considerWarningOnInvokeFunctionPermissions(scope: Construct, action: string): void
+```
+
+A warning will be added to functions under the following conditions: - permissions that include `lambda:InvokeFunction` are added to the unqualified function.
+
+function.currentVersion is invoked before or after the permission is created.
+
+This applies only to permissions on Lambda functions, not versions or aliases.
+This function is overridden as a noOp for QualifiedFunctionBase.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projenfunctionbundlingtest.SomeFunction.considerWarningOnInvokeFunctionPermissions.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `action`<sup>Required</sup> <a name="action" id="projenfunctionbundlingtest.SomeFunction.considerWarningOnInvokeFunctionPermissions.parameter.action"></a>
+
+- *Type:* string
+
+---
+
 ##### `grantInvoke` <a name="grantInvoke" id="projenfunctionbundlingtest.SomeFunction.grantInvoke"></a>
 
 ```typescript
@@ -188,6 +233,34 @@ public grantInvoke(grantee: IGrantable): Grant
 Grant the given identity permissions to invoke this Lambda.
 
 ###### `grantee`<sup>Required</sup> <a name="grantee" id="projenfunctionbundlingtest.SomeFunction.grantInvoke.parameter.grantee"></a>
+
+- *Type:* aws-cdk-lib.aws_iam.IGrantable
+
+---
+
+##### `grantInvokeCompositePrincipal` <a name="grantInvokeCompositePrincipal" id="projenfunctionbundlingtest.SomeFunction.grantInvokeCompositePrincipal"></a>
+
+```typescript
+public grantInvokeCompositePrincipal(compositePrincipal: CompositePrincipal): Grant[]
+```
+
+Grant multiple principals the ability to invoke this Lambda via CompositePrincipal.
+
+###### `compositePrincipal`<sup>Required</sup> <a name="compositePrincipal" id="projenfunctionbundlingtest.SomeFunction.grantInvokeCompositePrincipal.parameter.compositePrincipal"></a>
+
+- *Type:* aws-cdk-lib.aws_iam.CompositePrincipal
+
+---
+
+##### `grantInvokeUrl` <a name="grantInvokeUrl" id="projenfunctionbundlingtest.SomeFunction.grantInvokeUrl"></a>
+
+```typescript
+public grantInvokeUrl(grantee: IGrantable): Grant
+```
+
+Grant the given identity permissions to invoke this Lambda Function URL.
+
+###### `grantee`<sup>Required</sup> <a name="grantee" id="projenfunctionbundlingtest.SomeFunction.grantInvokeUrl.parameter.grantee"></a>
 
 - *Type:* aws-cdk-lib.aws_iam.IGrantable
 
@@ -277,6 +350,46 @@ Sum over 5 minutes
 
 ---
 
+##### `addAlias` <a name="addAlias" id="projenfunctionbundlingtest.SomeFunction.addAlias"></a>
+
+```typescript
+public addAlias(aliasName: string, options?: AliasOptions): Alias
+```
+
+Defines an alias for this function.
+
+The alias will automatically be updated to point to the latest version of
+the function as it is being updated during a deployment.
+
+```ts
+declare const fn: lambda.Function;
+
+fn.addAlias('Live');
+
+// Is equivalent to
+
+new lambda.Alias(this, 'AliasLive', {
+  aliasName: 'Live',
+  version: fn.currentVersion,
+});
+```
+
+###### `aliasName`<sup>Required</sup> <a name="aliasName" id="projenfunctionbundlingtest.SomeFunction.addAlias.parameter.aliasName"></a>
+
+- *Type:* string
+
+The name of the alias.
+
+---
+
+###### `options`<sup>Optional</sup> <a name="options" id="projenfunctionbundlingtest.SomeFunction.addAlias.parameter.options"></a>
+
+- *Type:* aws-cdk-lib.aws_lambda.AliasOptions
+
+Alias options.
+
+---
+
 ##### `addEnvironment` <a name="addEnvironment" id="projenfunctionbundlingtest.SomeFunction.addEnvironment"></a>
 
 ```typescript
@@ -327,15 +440,46 @@ the layers to be added.
 
 ---
 
+##### `invalidateVersionBasedOn` <a name="invalidateVersionBasedOn" id="projenfunctionbundlingtest.SomeFunction.invalidateVersionBasedOn"></a>
+
+```typescript
+public invalidateVersionBasedOn(x: string): void
+```
+
+Mix additional information into the hash of the Version object.
+
+The Lambda Function construct does its best to automatically create a new
+Version when anything about the Function changes (its code, its layers,
+any of the other properties).
+
+However, you can sometimes source information from places that the CDK cannot
+look into, like the deploy-time values of SSM parameters. In those cases,
+the CDK would not force the creation of a new Version object when it actually
+should.
+
+This method can be used to invalidate the current Version object. Pass in
+any string into this method, and make sure the string changes when you know
+a new Version needs to be created.
+
+This method may be called more than once.
+
+###### `x`<sup>Required</sup> <a name="x" id="projenfunctionbundlingtest.SomeFunction.invalidateVersionBasedOn.parameter.x"></a>
+
+- *Type:* string
+
+---
+
 #### Static Functions <a name="Static Functions" id="Static Functions"></a>
 
 | **Name** | **Description** |
 | --- | --- |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.isConstruct">isConstruct</a></code> | Checks if `x` is a construct. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.isOwnedResource">isOwnedResource</a></code> | Returns true if the construct was created by CDK, and false otherwise. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.isResource">isResource</a></code> | Check whether the given construct is a Resource. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.classifyVersionProperty">classifyVersionProperty</a></code> | Record whether specific properties in the `AWS::Lambda::Function` resource should also be associated to the Version resource. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.fromFunctionArn">fromFunctionArn</a></code> | Import a lambda function into the CDK using its ARN. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.fromFunctionAttributes">fromFunctionAttributes</a></code> | Creates a Lambda function object which represents a function not defined within this stack. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.fromFunctionName">fromFunctionName</a></code> | Import a lambda function into the CDK using its name. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricAll">metricAll</a></code> | Return the given named metric for this Lambda. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricAllConcurrentExecutions">metricAllConcurrentExecutions</a></code> | Metric for the number of concurrent executions across all Lambdas. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.metricAllDuration">metricAllDuration</a></code> | Metric for the Duration executing all Lambdas. |
@@ -361,6 +505,22 @@ Checks if `x` is a construct.
 - *Type:* any
 
 Any object.
+
+---
+
+##### `isOwnedResource` <a name="isOwnedResource" id="projenfunctionbundlingtest.SomeFunction.isOwnedResource"></a>
+
+```typescript
+import { SomeFunction } from 'projenfunctionbundlingtest'
+
+SomeFunction.isOwnedResource(construct: IConstruct)
+```
+
+Returns true if the construct was created by CDK, and false otherwise.
+
+###### `construct`<sup>Required</sup> <a name="construct" id="projenfunctionbundlingtest.SomeFunction.isOwnedResource.parameter.construct"></a>
+
+- *Type:* constructs.IConstruct
 
 ---
 
@@ -418,6 +578,9 @@ SomeFunction.fromFunctionArn(scope: Construct, id: string, functionArn: string)
 
 Import a lambda function into the CDK using its ARN.
 
+For `Function.addPermissions()` to work on this imported lambda, make sure that is
+in the same account and region as the stack you are importing it into.
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="projenfunctionbundlingtest.SomeFunction.fromFunctionArn.parameter.scope"></a>
 
 - *Type:* constructs.Construct
@@ -446,6 +609,9 @@ SomeFunction.fromFunctionAttributes(scope: Construct, id: string, attrs: Functio
 
 Creates a Lambda function object which represents a function not defined within this stack.
 
+For `Function.addPermissions()` to work on this imported lambda, set the sameEnvironment property to true
+if this imported lambda is in the same account and region as the stack you are importing it into.
+
 ###### `scope`<sup>Required</sup> <a name="scope" id="projenfunctionbundlingtest.SomeFunction.fromFunctionAttributes.parameter.scope"></a>
 
 - *Type:* constructs.Construct
@@ -467,6 +633,34 @@ The name of the lambda construct.
 - *Type:* aws-cdk-lib.aws_lambda.FunctionAttributes
 
 the attributes of the function to import.
+
+---
+
+##### `fromFunctionName` <a name="fromFunctionName" id="projenfunctionbundlingtest.SomeFunction.fromFunctionName"></a>
+
+```typescript
+import { SomeFunction } from 'projenfunctionbundlingtest'
+
+SomeFunction.fromFunctionName(scope: Construct, id: string, functionName: string)
+```
+
+Import a lambda function into the CDK using its name.
+
+###### `scope`<sup>Required</sup> <a name="scope" id="projenfunctionbundlingtest.SomeFunction.fromFunctionName.parameter.scope"></a>
+
+- *Type:* constructs.Construct
+
+---
+
+###### `id`<sup>Required</sup> <a name="id" id="projenfunctionbundlingtest.SomeFunction.fromFunctionName.parameter.id"></a>
+
+- *Type:* string
+
+---
+
+###### `functionName`<sup>Required</sup> <a name="functionName" id="projenfunctionbundlingtest.SomeFunction.fromFunctionName.parameter.functionName"></a>
+
+- *Type:* string
 
 ---
 
@@ -595,6 +789,7 @@ Metric for the number of unreserved concurrent executions across all Lambdas.
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.node">node</a></code> | <code>constructs.Node</code> | The tree node. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.env">env</a></code> | <code>aws-cdk-lib.ResourceEnvironment</code> | The environment this resource belongs to. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.stack">stack</a></code> | <code>aws-cdk-lib.Stack</code> | The stack in which this resource is defined. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.property.architecture">architecture</a></code> | <code>aws-cdk-lib.aws_lambda.Architecture</code> | The architecture of this Lambda Function (this is an optional attribute and defaults to X86_64). |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.connections">connections</a></code> | <code>aws-cdk-lib.aws_ec2.Connections</code> | Access the Connections object. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.functionArn">functionArn</a></code> | <code>string</code> | ARN of this function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.functionName">functionName</a></code> | <code>string</code> | Name of this function. |
@@ -602,12 +797,13 @@ Metric for the number of unreserved concurrent executions across all Lambdas.
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.isBoundToVpc">isBoundToVpc</a></code> | <code>boolean</code> | Whether or not this Lambda function was bound to a VPC. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.latestVersion">latestVersion</a></code> | <code>aws-cdk-lib.aws_lambda.IVersion</code> | The `$LATEST` version of this function. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.permissionsNode">permissionsNode</a></code> | <code>constructs.Node</code> | The construct node where permissions are attached. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.property.resourceArnsForGrantInvoke">resourceArnsForGrantInvoke</a></code> | <code>string[]</code> | The ARN(s) to put into the resource field of the generated IAM policy for grantInvoke(). |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.role">role</a></code> | <code>aws-cdk-lib.aws_iam.IRole</code> | Execution role associated with this function. |
-| <code><a href="#projenfunctionbundlingtest.SomeFunction.property.architecture">architecture</a></code> | <code>aws-cdk-lib.aws_lambda.Architecture</code> | The architecture of this Lambda Function (this is an optional attribute and defaults to X86_64). |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.currentVersion">currentVersion</a></code> | <code>aws-cdk-lib.aws_lambda.Version</code> | Returns a `lambda.Version` which represents the current version of this Lambda function. A new version will be created every time the function's configuration changes. |
-| <code><a href="#projenfunctionbundlingtest.SomeFunction.property.deadLetterQueue">deadLetterQueue</a></code> | <code>aws-cdk-lib.aws_sqs.IQueue</code> | The DLQ associated with this Lambda Function (this is an optional attribute). |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.logGroup">logGroup</a></code> | <code>aws-cdk-lib.aws_logs.ILogGroup</code> | The LogGroup where the Lambda function's logs are made available. |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.runtime">runtime</a></code> | <code>aws-cdk-lib.aws_lambda.Runtime</code> | The runtime configured for this lambda. |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.property.deadLetterQueue">deadLetterQueue</a></code> | <code>aws-cdk-lib.aws_sqs.IQueue</code> | The DLQ (as queue) associated with this Lambda Function (this is an optional attribute). |
+| <code><a href="#projenfunctionbundlingtest.SomeFunction.property.deadLetterTopic">deadLetterTopic</a></code> | <code>aws-cdk-lib.aws_sns.ITopic</code> | The DLQ (as topic) associated with this Lambda Function (this is an optional attribute). |
 | <code><a href="#projenfunctionbundlingtest.SomeFunction.property.timeout">timeout</a></code> | <code>aws-cdk-lib.Duration</code> | The timeout configured for this lambda. |
 
 ---
@@ -652,6 +848,18 @@ public readonly stack: Stack;
 - *Type:* aws-cdk-lib.Stack
 
 The stack in which this resource is defined.
+
+---
+
+##### `architecture`<sup>Required</sup> <a name="architecture" id="projenfunctionbundlingtest.SomeFunction.property.architecture"></a>
+
+```typescript
+public readonly architecture: Architecture;
+```
+
+- *Type:* aws-cdk-lib.aws_lambda.Architecture
+
+The architecture of this Lambda Function (this is an optional attribute and defaults to X86_64).
 
 ---
 
@@ -750,6 +958,18 @@ The construct node where permissions are attached.
 
 ---
 
+##### `resourceArnsForGrantInvoke`<sup>Required</sup> <a name="resourceArnsForGrantInvoke" id="projenfunctionbundlingtest.SomeFunction.property.resourceArnsForGrantInvoke"></a>
+
+```typescript
+public readonly resourceArnsForGrantInvoke: string[];
+```
+
+- *Type:* string[]
+
+The ARN(s) to put into the resource field of the generated IAM policy for grantInvoke().
+
+---
+
 ##### `role`<sup>Optional</sup> <a name="role" id="projenfunctionbundlingtest.SomeFunction.property.role"></a>
 
 ```typescript
@@ -759,18 +979,6 @@ public readonly role: IRole;
 - *Type:* aws-cdk-lib.aws_iam.IRole
 
 Execution role associated with this function.
-
----
-
-##### `architecture`<sup>Optional</sup> <a name="architecture" id="projenfunctionbundlingtest.SomeFunction.property.architecture"></a>
-
-```typescript
-public readonly architecture: Architecture;
-```
-
-- *Type:* aws-cdk-lib.aws_lambda.Architecture
-
-The architecture of this Lambda Function (this is an optional attribute and defaults to X86_64).
 
 ---
 
@@ -786,18 +994,6 @@ Returns a `lambda.Version` which represents the current version of this Lambda f
 
 You can specify options for this version using the `currentVersionOptions`
 prop when initializing the `lambda.Function`.
-
----
-
-##### `deadLetterQueue`<sup>Optional</sup> <a name="deadLetterQueue" id="projenfunctionbundlingtest.SomeFunction.property.deadLetterQueue"></a>
-
-```typescript
-public readonly deadLetterQueue: IQueue;
-```
-
-- *Type:* aws-cdk-lib.aws_sqs.IQueue
-
-The DLQ associated with this Lambda Function (this is an optional attribute).
 
 ---
 
@@ -829,6 +1025,30 @@ public readonly runtime: Runtime;
 - *Type:* aws-cdk-lib.aws_lambda.Runtime
 
 The runtime configured for this lambda.
+
+---
+
+##### `deadLetterQueue`<sup>Optional</sup> <a name="deadLetterQueue" id="projenfunctionbundlingtest.SomeFunction.property.deadLetterQueue"></a>
+
+```typescript
+public readonly deadLetterQueue: IQueue;
+```
+
+- *Type:* aws-cdk-lib.aws_sqs.IQueue
+
+The DLQ (as queue) associated with this Lambda Function (this is an optional attribute).
+
+---
+
+##### `deadLetterTopic`<sup>Optional</sup> <a name="deadLetterTopic" id="projenfunctionbundlingtest.SomeFunction.property.deadLetterTopic"></a>
+
+```typescript
+public readonly deadLetterTopic: ITopic;
+```
+
+- *Type:* aws-cdk-lib.aws_sns.ITopic
+
+The DLQ (as topic) associated with this Lambda Function (this is an optional attribute).
 
 ---
 
