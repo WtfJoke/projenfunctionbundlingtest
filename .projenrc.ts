@@ -10,6 +10,10 @@ const project = new awscdk.AwsCdkConstructLibrary({
   repositoryUrl:
     'https://github.com/manuel.wessner/projenfunctionbundlingtest.git',
   npmRegistryUrl: 'https://npm.pkg.github.com',
+  publishToPypi: {
+    distName: 'projenfunctionbundlingtest',
+    module: 'projenfunctionbundlingtest',
+  },
 
   // deps: [],                /* Runtime dependencies of this module. */
   // description: undefined,  /* The description is just a string that helps people understand the purpose of the package. */
