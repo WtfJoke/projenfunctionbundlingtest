@@ -4,7 +4,7 @@ const project = new awscdk.AwsCdkConstructLibrary({
   authorAddress: 'manuel.wessner@codecentric.de',
   cdkVersion: '2.130.0',
   defaultReleaseBranch: 'main',
-  jsiiVersion: '~5.0.0',
+  jsiiVersion: '~5.3.0',
   name: 'projenfunctionbundlingtest',
   projenrcTs: true,
   repositoryUrl:
